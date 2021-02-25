@@ -111,7 +111,7 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
             Z = np.exp(1j * theta)
         
         # Resynthesize in frequency domain:
-        Y = Z * Mag
+        Y = Z * X
         # Convert back to time domain:
         y_frame = np.fft.ifft(np.real(Y)) * window
         # Overlapp and add the new frames:
@@ -136,18 +136,14 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
     
     # In case of pitch shifting mode:
     if mode == 'pitch':
-        sample_rate = int(sample_rate * Q)
-    
-    # Write into wav file:
-    if write:
-        
-        sf.write('PhaseVox_out.wav', y, sample_rate)
+        sample_rate = int(sample_rate * Q)       
     
     return y, sample_rate
 #%%
 if __name__ == "__main__":
     
-    audio_file = 'SA1.wav'
-    Q = 1.8
-    mode = 'time'
-    y, _ = PhaseVox(audio_file, Q, mode = mode)
+    audio_file = './audio_files/SA1.wav'
+    Q = 0.7
+    mode = 'pitch'
+    y, sample_rate = PhaseVox(audio_file, Q, mode = mode)
+    sf.write('./audio_files/PhaseVox_out_'+mode+'.wav', y, sample_rate)
