@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Feb 25 13:59:11 2021
+Web browser app implementation of a phase vocoder via streamlit.
+
+With streamlit installed, enter the following from shell:
+    
+    $ streamlit run phasevox_app.py
 
 @author: nk
 """
@@ -12,11 +16,11 @@ import numpy as np
 import librosa as lb
 import soundfile as sf
 #%%
-
+# Make page title
 st.title('PhaseVox: \n A phase vocoder for time-stretching and pitch-shifting')
-
+# Upload audio file
 input_audio = st.file_uploader('Upload your audio file:', type = ['wav','mp3'])
-
+# Get audio file info
 if input_audio:
     x, sample_rate = lb.load(input_audio, sr = None)
     sf.write('./audio_files/input_audio.wav', x, sample_rate)
@@ -24,6 +28,7 @@ if input_audio:
     st.write('Input sample rate: ', sample_rate)
 
 #%%
+# Choose PhaseVox mode:
 selected_mode = st.selectbox('Choose function:', 
                     options = ('time stretching', 'pitch shifting'))
 
@@ -37,14 +42,18 @@ else:
     
     Q_meaning = 'time stretching factor'
 
+# Choose Q factor:
 Q = st.slider(Q_meaning+':', min_value = 0.05, max_value = 2.0, value = 1.0, step = 0.05)
 
 #%%
+# Some more advanced parameters:
 
-
+# Window length:
 N = st.selectbox('Window length (samples):',
                  options = (512, 1024, 2048, 4096),
                  index = 2)
+
+# Hop length:
 H_Choice = st.selectbox('Hop length (relative to window):', 
                         options = ('1/2', '1/4', '1/8', '1/12'),
                         index = 2)
@@ -52,6 +61,8 @@ H_Denom = int(H_Choice[-1])
 
 #%%
 applied_status = False
+
+# Deploy phase vocoder:
 
 if st.button('Apply'):
     # Create Hann window:
@@ -163,7 +174,10 @@ if st.button('Apply'):
     
     applied_status = True
     
+    # Write modified audio:
+    
     sf.write('./audio_files/output_audio.wav', y, sample_rate)
 #%%
+# Embed playback for modified audio:
 if applied_status:
     st.audio('./audio_files/output_audio.wav')
