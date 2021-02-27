@@ -166,7 +166,10 @@ if st.button('Apply'):
     
     # In case of pitch shifting mode:
     if mode == 'pitch':
-        sample_rate = int(sample_rate * Q)
+        # temporary sample rate:
+        sample_rate_p = int(sample_rate * Q)
+        # resample array to original sample rate (length):
+        y = lb.resample(y, sample_rate_p, sample_rate)
     
     # Signify to user that phase vocoder was applied:
     st.write('Applied phase vocoder with a ', 
