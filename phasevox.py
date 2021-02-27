@@ -123,7 +123,6 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
         ind_x = ind_x + H_Analysis
         ind_y = ind_y + H_Synth
         
-        #index ++1
         # Loop ends here.
 
 #%%
@@ -136,14 +135,23 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
     
     # In case of pitch shifting mode:
     if mode == 'pitch':
-        sample_rate = int(sample_rate * Q)       
+        
+        # Temporary sample rate for the different signal length:
+        sample_rate_p = int(sample_rate * Q)
+        # Resample output signal to the original sample rate:
+        y = lb.resample(y, sample_rate_p, sample_rate)
     
     return y, sample_rate
 #%%
 if __name__ == "__main__":
     
+    # Load an audio file:
     audio_file = './audio_files/SA1.wav'
-    Q = 0.7
-    mode = 'pitch'
+    # Set vocoder mode:    
+    mode = 'time'
+    # Set stretch/shift factor:
+    Q = 1.8
+    # Get modified signal:
     y, sample_rate = PhaseVox(audio_file, Q, mode = mode)
+    # Write into .wav file:
     sf.write('./audio_files/PhaseVox_out_'+mode+'.wav', y, sample_rate)
