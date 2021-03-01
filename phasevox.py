@@ -146,7 +146,7 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
 if __name__ == "__main__":
     
     # Load an audio file:
-    audio_file = './audio_files/SA1.wav'
+    audio_file = './audio_files/example_phrase.wav'
     # Set vocoder mode:    
     mode = 'time'
     # Set stretch/shift factor:
