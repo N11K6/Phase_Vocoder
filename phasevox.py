@@ -11,7 +11,7 @@ import numpy as np
 import librosa as lb
 import soundfile as sf
 #%%
-def PhaseVox(audio_file, Q, mode = 'time', write = True):
+def PhaseVox(audio_file, Q, mode = 'time'):
     '''
     Function to implement a Phase Vocoder algorithm in order to either: 
     
@@ -24,7 +24,6 @@ def PhaseVox(audio_file, Q, mode = 'time', write = True):
         audio_file (string): path to an input audio file
         Q (float): stretch factor (>1 to stretch, <1 to squeeze)
         mode (string): either 'time' or 'pitch' depending on the function
-        write (Boolean): choose wether to write output into .wav file
         
     returns:
         y : numpy array (float32) containing the stretched signal
