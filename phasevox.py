@@ -28,6 +28,13 @@ def PhaseVox(audio_file, Q, mode = 'time'):
     returns:
         y : numpy array (float32) containing the stretched signal
         sample_rate : the sample rate for the output signal
+        
+    Suggested usage: call PhaseVox as a function:
+    
+        y, sample_rate = PhaseVox("path/to/audio.wav", Q, "mode")
+        
+        Then, soundfile.write or another python proecess can be used to write the 
+        y array into an audio file using sample_rate as the sample rate.
     '''
     # Load input:
     x, sample_rate = lb.load(audio_file, sr = None)
