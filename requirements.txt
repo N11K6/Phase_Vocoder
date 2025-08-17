@@ -1,4 +1,4 @@
-librosa==0.11.0
-numpy==2.3.2
-pygame==2.6.1
-soundfile==0.13.1
+librosa
+numpy
+pygame
+soundfile
